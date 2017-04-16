@@ -88,7 +88,6 @@ class Application(Frame):
         duedate = self.box_selectdate.get()
         #figure out how many days in between two dates
         daysleft = date(int(duedate[6:10]), int(duedate[0:2]), int(duedate[3:5])) - today
-        print "You have %s days" % daysleft.days
         #destroy all buttons first
         for j in buttons:
             j.destroy()
@@ -98,18 +97,12 @@ class Application(Frame):
         sections = 1
 
         ratioA = float(conceptstage)/float(progressivestage)
-        print "ratioA %r" % ratioA
         goal = progressivestage * sections
-        print "goal %r" % goal
         ratioB = float(conceptstage)/goal
-        print "ratioB %r" % ratioB
         #average the two ratios
         ratioAVG = (ratioA + ratioB) / 2
-        print "ratioAVG %r" % ratioAVG
         conceptstage = progressivestage * ratioAVG
         progressivestage = 100 - conceptstage
-        print conceptstage
-        print progressivestage
         #now we divide those percentages up into each category
         #now lets organize a schedule based on percentages
         for k in range(0, len(Frame.phases)):
@@ -117,11 +110,9 @@ class Application(Frame):
             if k < 4:
                 wr = Frame.phaseimportance[k] * conceptstage
                 workdays = (wr/100) * daysleft.days
-                print workdays
             else:
                 wr = Frame.phaseimportance[k] * progressivestage
                 workdays = (wr/100) * daysleft.days
-                print workdays
 
             workdays = math.floor((workdays*100)/100)
             #create a label
